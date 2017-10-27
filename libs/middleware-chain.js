@@ -1,7 +1,7 @@
 /* eslint consistent-return:0 */
 
-const next = (middlewares, req, res) => {
-  const middleware = middlewares.shift();
+const next = (middlewares, index, req, res) => {
+  const middleware = middlewares[index];
 
   return (err) => {
     if (err) return res.send(err);
@@ -13,7 +13,7 @@ const next = (middlewares, req, res) => {
           middleware.context,
           req,
           res,
-          next(middlewares, req, res)
+          next(middlewares, index + 1, req, res)
         );
         if (result instanceof Promise) {
           // async support

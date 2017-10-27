@@ -18,7 +18,7 @@ module.exports = (options = {}) => {
   const routes = {};
   const middlewares = [];
 
-  let app = {
+  const app = {
     use: (middleware, context = {}) => {
       middlewares.push({
         handler: middleware,
@@ -65,7 +65,7 @@ module.exports = (options = {}) => {
       // calling middlewares
       require('./libs/middleware-chain')(
         [
-          ...middlewares.slice(0),
+          ...middlewares,
           {
             context: {},
             handler: (req, res, next) => {
@@ -78,6 +78,7 @@ module.exports = (options = {}) => {
             }
           }
         ],
+        0,
         req,
         res
       )();
